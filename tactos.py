@@ -32,7 +32,7 @@ def start_server():
     cmd = [
         str(LLAMA_SERVER), "-m", str(MODEL_PATH),
         "-c", str(CONTEXT_LEN), "--port", str(SERVER_PORT),
-        "--log-disable", "-np", "1", "--no-webui"
+        "--log-disable", "-np", "1", "--no-webui", "-t", "4"
     ]
     _server_proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     # Wait for server to be ready
