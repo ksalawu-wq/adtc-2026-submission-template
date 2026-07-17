@@ -1,37 +1,37 @@
 {
-  "team_id": "your-team-id",
-  "domain": "coding_assistants",
+  "team_id": "tactos",
+  "domain": "corporate_enterprise",
   "language_scope": ["en"],
-  "african_alpha_claim": false,
+  "african_alpha_claim": true,
   "budget_laptop_claim": true,
   "submitter": {
-    "name": "your-name",
-    "email": "your-email@domain.com",
-    "github_handle": "your-github"
+    "name": "Kabiru Salawu",
+    "email": "sakabiru11@gmail.com",
+    "github_handle": "ksalawu-wq"
   },
   "cross_disciplinary_pairing": {
-    "discipline": "education",
+    "discipline": "cybersecurity",
     "load_bearing": true,
-    "description": "Brief description of how your model serves a real-world domain."
+    "description": "On-device LLM for cybersecurity triage and incident reporting for African SMEs with no reliable cloud access."
   },
   "test_prompts": [
     {
       "prompt_id": "tp_001",
-      "prompt": "Write a Python function that reads a CSV file and returns the column with the highest mean value."
+      "prompt": "You are a cybersecurity analyst assistant. Summarize the following IDS alert into a one-paragraph executive brief for a non-technical SME manager: ALERT: Port scan detected from 192.168.1.45 targeting ports 22, 80, 443, 3306 over 5 minutes. Severity: Medium."
     },
     {
       "prompt_id": "tp_002",
-      "prompt": "Explain the difference between a list and a tuple in Python, and give one example where each is the better choice."
+      "prompt": "Draft a short incident response memo for a small Nigerian fintech company that discovered unauthorized login attempts on their admin portal from an overseas IP address. Include three recommended immediate actions."
     }
   ],
   "model": {
-    "name": "SmolLM2-135M-Instruct-Q4_K_M",
+    "name": "Qwen2.5-1.5B-Instruct-Q4_K_M",
     "runtime": "llama.cpp",
     "quantization": "GGUF Q4_K_M",
-    "parameters_estimate": "135M",
+    "parameters_estimate": "1.5B",
     "packaging": "binary_bundle"
   },
   "_runtime": {
-    "model_path": "model/SmolLM2-135M-Instruct-Q4_K_M.gguf"
+    "model_path": "model/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf"
   }
 }
