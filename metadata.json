@@ -9,6 +9,18 @@
     "email": "sakabiru11@gmail.com",
     "github_handle": "ksalawu-wq"
   },
+  "team_members": [
+    {
+      "name": "Kabiru Salawu",
+      "github_handle": "ksalawu-wq",
+      "devpost": "devpost.com/software/tactos"
+    },
+    {
+      "name": "Jameel Adediran",
+      "github_handle": "",
+      "devpost": "devpost.com/jameeladediran123"
+    }
+  ],
   "cross_disciplinary_pairing": {
     "discipline": "cybersecurity",
     "load_bearing": true,
