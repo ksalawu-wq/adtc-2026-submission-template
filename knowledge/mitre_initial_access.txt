@@ -1,0 +1,12 @@
+MITRE ATT&CK - Initial Access (TA0001)
+Adversaries use various entry point techniques to gain initial access to a network.
+
+T1190 - Exploit Public-Facing Application: Attackers exploit vulnerabilities in internet-facing services such as web servers, databases, or VPNs. Mitigation: patch regularly, use WAF.
+
+T1078 - Valid Accounts: Attackers use stolen or default credentials to log in. Common in fintech breaches. Mitigation: enforce MFA, monitor login anomalies, disable default accounts.
+
+T1566 - Phishing: Malicious emails trick users into revealing credentials or executing malware. Mitigation: email filtering, user training, sandbox attachments.
+
+T1110 - Brute Force: Automated password guessing against login portals. Indicators: repeated failed logins from same or distributed IPs. Mitigation: account lockout, rate limiting, geo-blocking.
+
+T1046 - Network Service Discovery / Port Scanning: Adversaries probe open ports to map the network before attacking. Indicators: sequential port connection attempts, high volume of SYN packets. Mitigation: firewall rules, IDS signatures, block external port scans.

@@ -1,0 +1,27 @@
+Incident Response Playbook for African SMEs
+
+PHASE 1 - IDENTIFICATION
+- Review IDS/SIEM alerts for anomalies
+- Classify severity: Critical, High, Medium, Low
+- Document: source IP, destination, time, affected systems
+
+PHASE 2 - CONTAINMENT
+- Isolate affected systems from the network immediately
+- Block suspicious IPs at the firewall
+- Preserve logs before any remediation
+
+PHASE 3 - ERADICATION
+- Remove malware or unauthorised access
+- Reset compromised credentials
+- Patch exploited vulnerabilities
+
+PHASE 4 - RECOVERY
+- Restore from clean backups
+- Monitor restored systems for 72 hours
+
+PHASE 5 - LESSONS LEARNED
+- Document full incident timeline
+- Update firewall rules and access policies
+- Train staff on what triggered the incident
+
+NIGERIAN CONTEXT: Report incidents to ngCERT (cert@certncc.gov.ng) and NDPC if personal data was involved.
