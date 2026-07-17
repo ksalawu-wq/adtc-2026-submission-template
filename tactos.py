@@ -54,7 +54,7 @@ def run_llm(prompt: str) -> str:
     payload = json.dumps({
         "prompt": prompt,
         "n_predict": MAX_TOKENS,
-        "temperature": 0.3,
+        "temperature": 0.7,
         "stop": ["[ANALYST INPUT]", "tactos>", "\n\n\n"]
     }).encode()
     req = urllib.request.Request(
