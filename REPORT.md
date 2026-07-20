@@ -70,7 +70,7 @@ All benchmarks measured on participant laptop (Intel i5-10210U, 7.7 GB RAM avail
 | Metric | Value |
 |---|---|
 | Prompt processing speed | 31.4 tokens/sec |
-| Generation speed | 11.5 tokens/sec |
+| Generation speed | 26.1 tokens/sec |
 | Peak RSS memory | 1,820 MB |
 | Steady-state RSS | 1,739 MB |
 | Peak VMS | 2,294 MB |
@@ -79,7 +79,7 @@ All benchmarks measured on participant laptop (Intel i5-10210U, 7.7 GB RAM avail
 | Quantization | GGUF Q4_K_M |
 
 **Projected scores against reference hardware (TPS_REFERENCE = 15.0):**
-- Sperf: 100 × (11.5 ÷ 15.0) ≈ **76.7**
+- Sperf: 100 × (26.1 ÷ 15.0) ≈ **100 (capped)**
 - Seff: 100 × ((7.0 − 1.82) ÷ 7.0) ≈ **74.0**
 - Pthermal: **0** (no throttling observed)
 

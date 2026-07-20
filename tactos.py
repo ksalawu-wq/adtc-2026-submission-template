@@ -16,7 +16,7 @@ BASE_DIR      = Path(__file__).parent
 MODEL_PATH    = BASE_DIR / "model" / "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf"
 KNOWLEDGE_DIR = BASE_DIR / "knowledge"
 LLAMA_SERVER  = Path.home() / "llama.cpp" / "build" / "bin" / "llama-server"
-MAX_TOKENS    = 600
+MAX_TOKENS    = 800
 CONTEXT_LEN   = 2048
 TOP_K_DOCS    = 2
 SERVER_PORT   = 8765
@@ -230,7 +230,12 @@ def main():
         for cutoff in ["ACTION:", "Response:", "[Attach", "John Doe", "[Add your",
                        "ALERT/INCIDENT:", "RELEVANT KNOWLEDGE:", "**Note:",
                        "We are working", "The company has taken",
-                       "[incident_response", "[mitre_initial"]:
+                       "[incident_response", "[mitre_initial",
+                       "Incident response memo", "**Incident Response Memo",
+                       "The unauthorized login", "The incident involves",
+                       "The incident is classified", "The incident is considered",
+                       "Based on the above", "[mitre_initial",
+                       "**The alert", "**The incident"]:
             if cutoff in raw:
                 raw = raw[:raw.index(cutoff)].strip()
                 break
