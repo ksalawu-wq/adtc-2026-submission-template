@@ -208,7 +208,10 @@ def main():
             print("[+] Exiting TactOS.")
             break
         if user_input.lower() == "help":
-            print("\nCommands: triage <alert> | memo <incident> | advise <question> | exit\n")
+            print("\nCommands: triage <alert> | memo <incident> | advise <question> | clear | exit\n")
+            continue
+        if user_input.lower() == "clear":
+            print("\033[2J\033[H", end="")
             continue
 
         query = user_input
