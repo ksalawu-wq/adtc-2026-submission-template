@@ -16,7 +16,7 @@ BASE_DIR      = Path(__file__).parent
 MODEL_PATH    = BASE_DIR / "model" / "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf"
 KNOWLEDGE_DIR = BASE_DIR / "knowledge"
 LLAMA_SERVER  = Path.home() / "llama.cpp" / "build" / "bin" / "llama-server"
-MAX_TOKENS    = 300
+MAX_TOKENS    = 600
 CONTEXT_LEN   = 2048
 TOP_K_DOCS    = 2
 SERVER_PORT   = 8765
@@ -130,13 +130,46 @@ def retrieve(query, docs, vecs, idf):
 
 # ── Prompt ────────────────────────────────────────────────────────────────────
 
-SYSTEM_PROMPT = """You are TactOS, an offline cybersecurity triage assistant for African SMEs.
-You help analysts summarize alerts, draft incident reports, and recommend immediate actions.
-Be concise and practical. Assume limited internet or cloud access."""
-
 def build_prompt(user_input, context):
-    ctx_block = f"\n\n[KNOWLEDGE CONTEXT]\n{context}" if context.strip() else ""
-    return f"{SYSTEM_PROMPT}{ctx_block}\n\n[ANALYST INPUT]\n{user_input}\n\n[TACTOS RESPONSE]\n"
+    ctx_block = f"\n\nRELEVANT KNOWLEDGE:\n{context}" if context.strip() else ""
+    is_memo = user_input.lower().startswith("memo")
+    if is_memo:
+        template = """You are a cybersecurity analyst at an African SME. Write a short incident response memo for the following incident. Be direct and specific. Use this exact format:
+
+INCIDENT RESPONSE MEMO
+Severity: High
+Summary: Write one sentence here.
+Affected Systems: List them here.
+Immediate Actions:
+1. First action.
+2. Second action.
+3. Third action.
+Short-term Actions:
+1. First action.
+2. Second action.
+Regulatory Note: Report to ngCERT at cert@certncc.gov.ng if data was compromised.
+"""
+    else:
+        template = """You are a cybersecurity analyst triaging a security alert for an African SME.
+Analyse the alert and respond using ONLY this structure — no extra commentary:
+
+TRIAGE REPORT
+Severity:
+Threat Type:
+MITRE Technique:
+
+Summary:
+[Two sentences describing what happened and why it matters]
+
+Immediate Actions:
+1. [Action]
+2. [Action]
+3. [Action]
+
+Risk if Unaddressed:
+[One sentence on the consequence of ignoring this alert]
+"""
+    return f"{template}\n\nALERT/INCIDENT:\n{user_input}{ctx_block}\n\nRESPONSE:\n"
 
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
@@ -149,7 +182,7 @@ BANNER = """
 """
 
 def main():
-    print(BANNER)
+    print(BANNER, flush=True)
     docs = load_knowledge()
     if docs:
         vecs, idf = build_tfidf(docs)
@@ -187,7 +220,31 @@ def main():
         context = retrieve(query, docs, vecs, idf) if docs else ""
         prompt = build_prompt(user_input, context)
         print("\n[~] Analysing...\n")
-        print(run_llm(prompt))
+        raw = run_llm(prompt)
+        # Extract clean memo/report block if present
+        for marker in ["INCIDENT RESPONSE MEMO", "TRIAGE REPORT"]:
+            if marker in raw:
+                raw = raw[raw.index(marker):]
+                break
+        # Cut off at trailing noise
+        for cutoff in ["ACTION:", "Response:", "[Attach", "John Doe", "[Add your",
+                       "ALERT/INCIDENT:", "RELEVANT KNOWLEDGE:", "**Note:",
+                       "We are working", "The company has taken",
+                       "[incident_response", "[mitre_initial"]:
+            if cutoff in raw:
+                raw = raw[:raw.index(cutoff)].strip()
+                break
+        # Cut triage repeats
+        if raw.count("Immediate Actions") > 1:
+            idx = raw.index("Immediate Actions")
+            idx2 = raw.index("Immediate Actions", idx + 1)
+            raw = raw[:idx2].strip()
+        # Cut triage repeats — find second occurrence of "Immediate Actions"
+        if "TRIAGE" not in raw and raw.count("Immediate Actions") > 1:
+            idx = raw.index("Immediate Actions")
+            idx2 = raw.index("Immediate Actions", idx + 1)
+            raw = raw[:idx2].strip()
+        print(raw)
 
 if __name__ == "__main__":
     main()
